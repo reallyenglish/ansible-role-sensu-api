@@ -1,6 +1,6 @@
 # ansible-role-sensu-api
 
-A brief description of the role goes here.
+Configures `sensu-api`.
 
 # Requirements
 
@@ -8,17 +8,59 @@ None
 
 # Role Variables
 
-| variable | description | default |
+| Variable | Description | Default |
 |----------|-------------|---------|
+| `sensu_api_user` | user name of `sensu-api` | `{{ __sensu_api_user }}` |
+| `sensu_api_group` | group name of `sensu-api` | `{{ __sensu_api_group }}` |
+| `sensu_api_service` | service name of `sensu-api` | `{{ __sensu_api_service }}` |
+| `sensu_api_config_dir` | path to configuration directory | `{{ __sensu_api_config_dir }}` |
+| `sensu_api_config_file` | path to `config.json` | `{{ sensu_api_config_dir }}/config.json` |
+| `sensu_api_conf_d_dir` | path to `conf.d` directory | `{{ sensu_api_config_dir }}/conf.d` |
+| `sensu_api_extensions_dir` | path to `extensions` directory | `{{ sensu_api_config_dir }}/extensions` |
+| `sensu_api_plugins_dir` | path to `plugins` directory | `{{ sensu_api_config_dir }}/plugins` |
+| `sensu_api_flags` | not used yet | `""` |
+| `sensu_api_config` | YAML representation of `config.json` | `{}` |
+| `sensu_api_config_fragments` | YAML representation of JSON files under `conf.d` | `{}` |
 
+
+## FreeBSD
+
+| Variable | Default |
+|----------|---------|
+| `__sensu_api_user` | `sensu` |
+| `__sensu_api_group` | `sensu` |
+| `__sensu_api_service` | `sensu-api` |
+| `__sensu_api_config_dir` | `/usr/local/etc/sensu` |
 
 # Dependencies
 
-None
+- reallyenglish.freebsd-repos (FreeBSD only)
 
 # Example Playbook
 
 ```yaml
+- hosts: localhost
+  roles:
+    - ansible-role-sensu-api
+  vars:
+    freebsd_repos:
+      sensu:
+        enabled: "true"
+        url: https://sensu.global.ssl.fastly.net/freebsd/FreeBSD:10:amd64/
+        mirror_type: srv
+        signature_type: none
+        priority: 100
+        state: present
+    sensu_api_config_fragments:
+      transport:
+        transport:
+          name: rabbitmq
+          reconnect_on_error: true
+      api:
+        api:
+          host: "{{ ansible_default_ipv4.address }}"
+          bind: "{{ ansible_default_ipv4.address }}"
+          port: 4242
 ```
 
 # License

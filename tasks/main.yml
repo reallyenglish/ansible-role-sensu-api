@@ -1,37 +1,43 @@
 ---
-# tasks file for ansible-role-sensu-api
+# tasks file for ansible-role-sensu_api
 
 - include_vars: "{{ ansible_os_family }}.yml"
 
 - include: "install-{{ ansible_os_family }}.yml"
 
-- name: Create log directory
+- name: Create sensu_api_conf_d_dir
   file:
-    path: "{{ sensu-api_log_dir }}"
-    mode: 0755
-    owner: "{{ sensu-api_user }}"
-    group: "{{ sensu-api_group }}"
+    path: "{{ sensu_api_conf_d_dir }}"
     state: directory
-  notify: Restart sensu-api
 
-- name: Create db directory
+- name: Create sensu_api_extensions_dir
   file:
-    path: "{{ sensu-api_db_dir }}"
-    mode: 0755
-    owner: "{{ sensu-api_user }}"
-    group: "{{ sensu-api_group }}"
+    path: "{{ sensu_api_extensions_dir }}"
     state: directory
-  notify: Restart sensu-api
 
-- name: Create sensu-api.conf
+- name: Create sensu_api_plugins_dir
+  file:
+    path: "{{ sensu_api_plugins_dir }}"
+    state: directory
+
+- name: Create sensu_api_config_file
   template:
-    src: sensu-api.conf.j2
-    dest: "{{ sensu-api_conf_file }}"
-    validate: echo %s
-  notify: Restart sensu-api
+    src: config.json.j2
+    dest: "{{ sensu_api_config_file }}"
+    validate: "python -c 'import sys; import json; json.loads(open(sys.argv[1]).read())' %s"
+  notify: Restart sensu_api_service
 
-- name: Start sensu-api
+- name: Create json files
+  template:
+    src: json.j2
+    dest: "{{ sensu_api_conf_d_dir }}/{{ item }}.json"
+    validate: "python -c 'import sys; import json; json.loads(open(sys.argv[1]).read())' %s"
+  notify: Restart sensu_api_service
+  with_items: "{{ sensu_api_config_fragments }}"
+
+
+- name: Start sensu_api_service
   service:
-    name: "{{ sensu-api_service }}"
+    name: "{{ sensu_api_service }}"
     enabled: true
     state: started

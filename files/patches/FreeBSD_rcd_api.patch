@@ -1,0 +1,24 @@
+--- sensu-api.orig	2017-07-04 07:44:38.928386000 +0000
++++ sensu-api	2017-07-04 07:45:13.033809000 +0000
+@@ -27,18 +27,18 @@
+ 
+ sensu_api_validate_config() {
+   echo "Validating sensu-api configuration"
+-  su -m $sensu_client_user -c "${command} validate api"
++  su -m $sensu_api_user -c "${command} validate api"
+   if [ $? != 0 ]; then
+     return 1
+   fi
+ }
+ 
+ start_precmd() {
+-  sensu_client_validate_config
++  sensu_api_validate_config
+ }
+ 
+ restart_precmd() {
+-  sensu_client_validate_config
++  sensu_api_validate_config
+ }
+ 
+ load_rc_config $name

@@ -2,5 +2,10 @@
 
 - name: Install sensu-api
   pkgng:
-    name: sensu-api
+    name: sensu
     state: present
+
+- name: Patch sensu-api rc.d script
+  patch:
+    src: files/patches/FreeBSD_rcd_api.patch
+    dest: /usr/local/etc/rc.d/sensu-api

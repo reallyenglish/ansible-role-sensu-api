@@ -1,2 +1,4 @@
-__sensu-api_db_dir: /var/db/sensu-api
-__sensu-api_conf_dir: /usr/local/etc/sensu-api
+__sensu_api_user: sensu
+__sensu_api_group: sensu
+__sensu_api_service: sensu-api
+__sensu_api_config_dir: /usr/local/etc/sensu
