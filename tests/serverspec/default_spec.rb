@@ -9,6 +9,7 @@ group   = "sensu"
 ports = [4242]
 default_user = "root"
 default_group = "root"
+default_ip_address = "10.0.2.15"
 
 case os[:family]
 when "freebsd"
@@ -72,9 +73,9 @@ describe file("#{config_dir}/conf.d/api.json") do
   it { should be_mode 644 }
   it { should be_owned_by default_user }
   it { should be_grouped_into default_group }
-  its(:content_as_json) { should include("api" => include("host" => "10.0.2.15")) }
-  its(:content_as_json) { should include("api" => include("bind" => "10.0.2.15")) }
-  its(:content_as_json) { should include("api" => include("port" => 4242)) }
+  its(:content_as_json) { should include("api" => include("host" => default_ip_address)) }
+  its(:content_as_json) { should include("api" => include("bind" => default_ip_address)) }
+  its(:content_as_json) { should include("api" => include("port" => ports.first)) }
 end
 
 describe service(service) do
