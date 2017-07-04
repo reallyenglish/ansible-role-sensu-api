@@ -1,0 +1,8 @@
+sensu-api_user: sensu-api
+sensu-api_group: sensu-api
+sensu-api_log_dir: /var/log/sensu-api
+sensu-api_db_dir: "{{ __sensu-api_db_dir }}"
+sensu-api_service: sensu-api
+sensu-api_conf_dir: "{{ __sensu-api_conf_dir }}"
+sensu-api_conf_file: "{{ __sensu-api_conf_dir }}/sensu-api.conf"
+sensu-api_flags: ""

@@ -1,0 +1,6 @@
+---
+
+- name: Install sensu-api
+  pkgng:
+    name: sensu-api
+    state: present
