@@ -2,4 +2,21 @@
   roles:
     - ansible-role-sensu-api
   vars:
-    sensu-api_config: ""
+    freebsd_repos:
+      sensu:
+        enabled: "true"
+        url: https://sensu.global.ssl.fastly.net/freebsd/FreeBSD:10:amd64/
+        mirror_type: srv
+        signature_type: none
+        priority: 100
+        state: present
+    sensu_api_config_fragments:
+      transport:
+        transport:
+          name: rabbitmq
+          reconnect_on_error: true
+      api:
+        api:
+          host: "{{ ansible_default_ipv4.address }}"
+          bind: "{{ ansible_default_ipv4.address }}"
+          port: 4242

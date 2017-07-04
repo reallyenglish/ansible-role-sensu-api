@@ -1,8 +1,11 @@
-sensu-api_user: sensu-api
-sensu-api_group: sensu-api
-sensu-api_log_dir: /var/log/sensu-api
-sensu-api_db_dir: "{{ __sensu-api_db_dir }}"
-sensu-api_service: sensu-api
-sensu-api_conf_dir: "{{ __sensu-api_conf_dir }}"
-sensu-api_conf_file: "{{ __sensu-api_conf_dir }}/sensu-api.conf"
-sensu-api_flags: ""
+sensu_api_user: "{{ __sensu_api_user }}"
+sensu_api_group: "{{ __sensu_api_group }}"
+sensu_api_service: "{{ __sensu_api_service }}"
+sensu_api_config_dir: "{{ __sensu_api_config_dir }}"
+sensu_api_config_file: "{{ sensu_api_config_dir }}/config.json"
+sensu_api_conf_d_dir: "{{ sensu_api_config_dir }}/conf.d"
+sensu_api_extensions_dir: "{{ sensu_api_config_dir }}/extensions"
+sensu_api_plugins_dir: "{{ sensu_api_config_dir }}/plugins"
+sensu_api_flags: ""
+sensu_api_config: {}
+sensu_api_config_fragments: {}

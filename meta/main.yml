@@ -20,6 +20,7 @@ galaxy_info:
 #    - 7
 
   galaxy_tags:
-    - system
-#dependencies:
-#  - { role: username.common, some_parameter: 3 }
+    - sensu
+    - monitoring
+dependencies:
+  - { role: reallyenglish.freebsd-repos }
