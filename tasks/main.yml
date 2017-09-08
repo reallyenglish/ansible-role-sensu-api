@@ -25,14 +25,14 @@
     src: config.json.j2
     dest: "{{ sensu_api_config_file }}"
     validate: "python -c 'import sys; import json; json.loads(open(sys.argv[1]).read())' %s"
-  notify: Restart sensu_api_service
+  notify: Restart sensu services
 
 - name: Create json files
   template:
     src: json.j2
     dest: "{{ sensu_api_conf_d_dir }}/{{ item }}.json"
     validate: "python -c 'import sys; import json; json.loads(open(sys.argv[1]).read())' %s"
-  notify: Restart sensu_api_service
+  notify: Restart sensu services
   with_items: "{{ sensu_api_config_fragments }}"
 
 

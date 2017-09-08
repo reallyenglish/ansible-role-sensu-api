@@ -9,3 +9,4 @@
   patch:
     src: files/patches/FreeBSD_rcd_api.patch
     dest: /usr/local/etc/rc.d/sensu-api
+  notify: Restart sensu_api_service

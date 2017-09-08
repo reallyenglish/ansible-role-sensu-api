@@ -1,5 +1,6 @@
 - hosts: localhost
   roles:
+    - reallyenglish.freebsd-repos
     - ansible-role-sensu-api
   vars:
     freebsd_repos:
